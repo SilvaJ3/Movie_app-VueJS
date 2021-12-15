@@ -95,6 +95,7 @@ export default {
   border-bottom: white 2px solid;
   z-index: 2;
   pointer-events: all;
+  transition: 1.5s ease-in-out
 }
 
 .poster img:hover {
