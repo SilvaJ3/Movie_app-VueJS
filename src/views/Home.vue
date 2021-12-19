@@ -18,28 +18,18 @@
 
 
 <script>
-// import { mapState } from "vuex"
-import axios from "axios"
+import { mapState } from "vuex"
 
 export default {
   name: 'Home',
-  // computed:  {
-  //   ...mapState([
-  //     "movies"
-  //   ])
-  // }
-  // ,
-  data(){
-    return {
-      movies: [],
-    }
+  computed:  
+  {
+    ...mapState([
+      "movies"
+    ])
   },
   mounted() {
-    axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=c0b1ecd6347e5b7e8483c2353b7da5ab")
-      .then(response => {
-        this.movies = response.data.results;
-        console.log(response.data.results);
-      })
+    this.$store.dispatch("callMovies");
   }
 }
   

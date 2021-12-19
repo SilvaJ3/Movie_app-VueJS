@@ -1,5 +1,5 @@
 <template>
-  <div class="movie">
+  <div class="movie" v-if="movie">
     <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="">
     <div>
       <h1>{{movie.original_title}}</h1>
@@ -9,13 +9,18 @@
 </template>
 
 <script>
-import axios from "axios"
-
+import { mapState } from "vuex"
 
 export default {
-  data(){
-    return {
-      movies: [],
+  computed:  
+  {
+    ...mapState([
+      "movies"
+    ]),
+    movie(){
+      return this.movies.find(
+        movie => movie.id == this.id
+      )
     }
   },
   props: {
@@ -24,18 +29,8 @@ export default {
       required: true
     }
   },
-  computed: {
-    movie(){
-      return this.movies.find(
-        movie => movie.id == this.id
-      )
-    }
-  },
   mounted() {
-    axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=c0b1ecd6347e5b7e8483c2353b7da5ab")
-      .then(response => {
-        this.movies = response.data.results;
-      })
+    this.$store.dispatch("callMovies");
   }
 }
 </script>

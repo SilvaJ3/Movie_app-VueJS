@@ -9,18 +9,16 @@ export default new Vuex.Store({
     movies: []
   },
   mutations: {
-    loadMovies(state, movies) {
+    loadMovies: function (state, movies) {
       state.movies = movies;
     }
   },
   actions: {
-    loadMovies({ commit }) {
-      axios.get("https://api.themoviedb.org/3/movie/550?api_key=c0b1ecd6347e5b7e8483c2353b7da5ab")
-        .then(response => {
-          commit("loadMovies", response.data.results);
-        })
+    callMovies: function ({ commit }) {
+      axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=c0b1ecd6347e5b7e8483c2353b7da5ab")
+      .then(response => {
+        commit("loadMovies", response.data.results);
+      })
     }
   },
-  modules: {
-  }
 })
